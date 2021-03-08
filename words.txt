@@ -8,7 +8,13 @@ cat cup 5
 wolf wool 3
 emu eat
 emu eat 5
-flu 2
+flu flo 4
+kea kin 3
+kea ken 4
+cool cake 3
+show sign 3
+eggs edit 3
+jelly jived 3
 
 cat
 cup
@@ -24,3 +30,20 @@ wolf
 wool
 flu
 flo
+kea
+kin
+cot
+kfc
+ken
+cake
+cool
+show
+shows
+sign
+edit
+eggs
+eyes
+jelly
+jived
+errie
+jokes
