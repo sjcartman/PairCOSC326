@@ -1,0 +1,26 @@
+cat cup
+cap cup 4
+cat dog 3
+emu kea
+flu coivd
+car cat
+cat cup 5
+wolf wool 3
+emu eat
+emu eat 5
+flu 2
+
+cat
+cup
+dog
+cap
+cut
+elephant
+emu
+tiger
+eat
+cab
+wolf
+wool
+flu
+flo
