@@ -8,7 +8,7 @@ cat cup 5
 wolf wool 3
 emu eat
 emu eat 5
-flu 2
+flu eat 2
 
 cat
 cup

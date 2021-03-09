@@ -5,8 +5,17 @@
 import java.util.*;
 
 public class GraphNode{
-    private static String value;
+    private String value;
     private ArrayList<GraphNode> neighbours = new ArrayList<GraphNode>();
+    private boolean neighboursSet = false;
+
+    public void setNeighboursSet(){
+        neighboursSet = true;
+    }
+
+    public boolean getNeighboursSet(){
+        return neighboursSet;
+    }
 
     public GraphNode(String input){
         value = input;
