@@ -86,6 +86,8 @@
                  return false;
              }
          }
+
+         //System.out.print(n.getWord());
          
          if (n.getWord().equals(target)) {
              visited = new ArrayList<String>();
@@ -139,25 +141,30 @@
         getInput();
         link();
         find_valueNode();
-        // for (GraphNode g: nodes) {
-        //     System.out.print(g.getWord()+ " : ");
+        for (GraphNode g: nodes) {
+             System.out.print(g.getWord()+ " : ");
 	    
-        //     for (GraphNode i: g.getNeighbours()) {
-        //         System.out.print(i.getWord()+ " | ");
-        //     }
-        //     System.out.println();
-        // }
-        // System.out.println();
+             for (int i =0; i< g.size();i++) {
+            System.out.print(g.getNeighbour(i).getWord()+ " | ");
+            }
+            System.out.println();
+        }
+        System.out.println();
 		
         for(Route r:chains){
-           System.out.println(r.getValue()+" "+ r.getTarget());
-           if(r.possible){
-               dfs(r.getValueNode(), r.getValue());
-
-               for (String s: visited) {
-                   System.out.print(s + " ");
+            //(r.getValue()+" "+ r.getTarget());
+            if(r.possible){
+                list = new ArrayList<String>();
+               if(dfs(r.getValueNode(), r.getTarget())){
+                   //System.out.println(visited.size());
+                   for (int i = visited.size()-1; i> -1; i--) {
+                       System.out.print(visited.get(i) + " ");
+                   }
+                   System.out.println();
                }
-               System.out.println();
+               else{
+                   System.out.println("impossible");
+               }
            }
            else{
                System.out.println("impossible");
