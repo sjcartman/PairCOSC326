@@ -23,10 +23,11 @@ public class GraphNode {
     public void addNeighbour (GraphNode n) {
         neighbours.add(n);
     }
-    public GraphNode[] getNeighbours() {
-        GraphNode[] out = new GraphNode[neighbours.size()];
-        out = neighbours.toArray(out);
-        return out;
+    public int size(){
+        return neighbours.size();
+    }
+    public GraphNode  getNeighbour(int index) {
+        return neighbours.get(index);
     }
     public String getWord() {
         return value;

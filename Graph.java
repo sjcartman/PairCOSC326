@@ -11,7 +11,9 @@
      // declaration for input
     private static ArrayList<GraphNode> nodes = new ArrayList<GraphNode>();
      // delcaration for the chain
-    private static ArrayList<Route> chains = new ArrayList<Route>();
+     private static ArrayList<Route> chains = new ArrayList<Route>();
+     private static ArrayList<String> visited = new ArrayList<String>();
+     private static ArrayList<String> list = new ArrayList<String>();
 
     private static void link() {
         for(GraphNode i :nodes){
@@ -76,33 +78,96 @@
      /**
       * Using depth first search to connect the word chains
       */
-     private static void dfs(GraphNode n) {
-         ArrayList<n> visited = new ArrayList<>();
-	 boolean[] visited = new boolean[];
+     private static boolean  dfs(GraphNode n, String target) {
+         
+         for (String s: list) {
+             // if node has been visited
+             if (s.equals(n.getWord())) {
+                 return false;
+             }
+         }
+         
+         if (n.getWord().equals(target)) {
+             visited = new ArrayList<String>();
+             visited.add(n.getWord());
+             return true;
+         }
 
-	 for (int i = 0; i < n.length(); i++) {
-	     if (!visited[i]) {
-		 dfs(n);
-	     }
+       
+
+         list.add(n.getWord());
+
+         
+         
+	 for (int i = 0; i < n.size(); i++) {
+             boolean search = dfs(n.getNeighbour(i), target);
+
+             if (search) {
+                 visited.add(n.getWord());
+                 return true;
+             }
 	 }
+         return false;
+         
+     }
+
+     private static void find_valueNode() {
+
+         for (Route r: chains) {
+             boolean b = false;
+             boolean a = false;
+             
+             for (GraphNode n: nodes) {
+                 // check chains
+                 if (r.getValue().equals(n.getWord())) {
+                     r.setValuenode(n);
+                     b = true;
+                 } else if (r.getTarget().equals(n.getWord())) {
+                     a = true;
+                 }
+             
+                 
+             }
+         
+
+             r.possible = b && a;
+             
+         }
      }
 	 
     public static void main (String[] args) {
         getInput();
         link();
-        for (GraphNode g: nodes) {
-            System.out.print(g.getWord()+ " : ");
+        find_valueNode();
+        // for (GraphNode g: nodes) {
+        //     System.out.print(g.getWord()+ " : ");
 	    
-            for (GraphNode i: g.getNeighbours()) {
-                System.out.print(i.getWord()+ " | ");
-            }
-            System.out.println();
+        //     for (GraphNode i: g.getNeighbours()) {
+        //         System.out.print(i.getWord()+ " | ");
+        //     }
+        //     System.out.println();
+        // }
+        // System.out.println();
+		
+        for(Route r:chains){
+           System.out.println(r.getValue()+" "+ r.getTarget());
+           if(r.possible){
+               dfs(r.getValueNode(), r.getValue());
+
+               for (String s: visited) {
+                   System.out.print(s + " ");
+               }
+               System.out.println();
+           }
+           else{
+               System.out.println("impossible");
+           }
+
         }
-        System.out.println();
-	//	dfs(GraphNode g);
-        //for(Route r:chains){
-        //   System.out.println(r.getValue()+" "+ r.getTarget());
-        //}
+
+        
     }
 
  }
+
+         

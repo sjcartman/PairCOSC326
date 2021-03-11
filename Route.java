@@ -7,6 +7,16 @@ public class Route {
     private String target;
     private int hops;
     private boolean hopsSet;
+    private GraphNode valueNode;
+    public boolean possible = false;
+
+    public void setValuenode(GraphNode g) {
+        valueNode = g;
+    }
+
+    public GraphNode getValueNode() {
+        return valueNode;
+    }
 
     /** sets the value of data field to input parameter value with no int input
      * @param inValue value of the word
