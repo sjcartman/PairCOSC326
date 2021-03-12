@@ -12,6 +12,7 @@ flu flo 4
 kea kin 3
 kea ken 4
 cool cake 3
+cool cake 
 show sign 3
 eggs edit 3
 jelly jived 3
@@ -47,3 +48,4 @@ jelly
 jived
 errie
 jokes
+car

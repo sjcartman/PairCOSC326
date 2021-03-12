@@ -78,7 +78,7 @@
      /**
       * Using depth first search to connect the word chains
       */
-     private static boolean  dfs(GraphNode n, String target) {
+     private static boolean  dfs(GraphNode n, Route target, int depth) {
          
          for (String s: list) {
              // if node has been visited
@@ -89,29 +89,33 @@
 
          //System.out.print(n.getWord());
          
-         if (n.getWord().equals(target)) {
-             visited = new ArrayList<String>();
-             visited.add(n.getWord());
-             return true;
-         }
+        if (n.getWord().equals(target.getTarget())) {
+            //System.out.println(depth);
+            if(!target.isHopsSet() || target.getHops() == depth){
+                visited = new ArrayList<String>();
+                visited.add(n.getWord());
+                return true;
+            }
+            
+        }
 
        
 
-         list.add(n.getWord());
+        list.add(n.getWord());
 
          
          
-	 for (int i = 0; i < n.size(); i++) {
-             boolean search = dfs(n.getNeighbour(i), target);
+        for (int i = 0; i < n.size(); i++) {
+            boolean search = dfs(n.getNeighbour(i), target,depth++);
 
-             if (search) {
-                 visited.add(n.getWord());
-                 return true;
-             }
-	 }
-         return false;
-         
-     }
+            if (search) {
+                visited.add(n.getWord());
+                return true;
+            }
+        }
+        return false;
+            
+        }
 
      private static void find_valueNode() {
 
@@ -141,21 +145,21 @@
         getInput();
         link();
         find_valueNode();
-        for (GraphNode g: nodes) {
-             System.out.print(g.getWord()+ " : ");
+        //for (GraphNode g: nodes) {
+          //   System.out.print(g.getWord()+ " : ");
 	    
-             for (int i =0; i< g.size();i++) {
-            System.out.print(g.getNeighbour(i).getWord()+ " | ");
-            }
-            System.out.println();
-        }
-        System.out.println();
+            // for (int i =0; i< g.size();i++) {
+            //System.out.print(g.getNeighbour(i).getWord()+ " | ");
+            //}
+            //System.out.println();
+        //}
+        //System.out.println();
 		
         for(Route r:chains){
             //(r.getValue()+" "+ r.getTarget());
             if(r.possible){
                 list = new ArrayList<String>();
-               if(dfs(r.getValueNode(), r.getTarget())){
+               if(dfs(r.getValueNode(), r,2)){
                    //System.out.println(visited.size());
                    for (int i = visited.size()-1; i> -1; i--) {
                        System.out.print(visited.get(i) + " ");
@@ -163,11 +167,19 @@
                    System.out.println();
                }
                else{
-                   System.out.println("impossible");
+                   System.out.print(r.getValue()+" "+r.getTarget()+" ");
+                   if(r.isHopsSet()){
+                       System.out.print(r.getHops());
+                   }
+                   System.out.println(" impossible");
                }
            }
            else{
-               System.out.println("impossible");
+                System.out.print(r.getValue()+" "+r.getTarget()+" ");
+                   if(r.isHopsSet()){
+                       System.out.print(r.getHops());
+                   }
+                System.out.println(" impossible");
            }
 
         }
