@@ -1,7 +1,8 @@
+package wordchains;
+
 /**
  * Stores and displays information about the word chains
  */
-
 public class Route {
     private String value;
     private String target;
