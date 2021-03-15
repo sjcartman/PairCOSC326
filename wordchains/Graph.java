@@ -13,9 +13,7 @@ import java.util.*;
      // declaration for input
     private static ArrayList<GraphNode> nodes = new ArrayList<GraphNode>();
      // delcaration for the chain
-     private static ArrayList<Route> chains = new ArrayList<Route>();
-     private static ArrayList<String> visited = new ArrayList<String>();
-     private static ArrayList<String> list = new ArrayList<String>();
+    private static ArrayList<Route> chains = new ArrayList<Route>();
 
     private static void link() {
         for(GraphNode i :nodes){
@@ -70,60 +68,56 @@ import java.util.*;
                 }
                 
                 }catch(Exception e){
-                    System.err.println("input should be in form: [origin] [target] <chainlengh>");
+                    System.err.println("Invalid");
                 }
             }
             
             else if (readingWordList) {
                 Scanner scanLine = new Scanner(line);
                 String s = scanLine.next();
-                nodes.add(new GraphNode(s));
+                boolean set = true; ;
+                for(GraphNode n:nodes){
+                    if(n.getWord().equals(s)){
+                       System.err.println("Invalid");
+                       set = false;
+                    }
+                }
+                if(set){
+                    nodes.add(new GraphNode(s));
+                }
+                
             }
 
         }
     }
-     
+    
+
      /**
-      * Using depth first search to connect the word chains
+      * Using breath first search to connect the word chains
       */
-     private static boolean  dfs(GraphNode n, Route target, int depth) {
-         
-         for (String s: list) {
-             // if node has been visited
-             if (s.equals(n.getWord())) {
-                 return false;
-             }
-         }
-
-         //System.out.print(n.getWord());
-         
-        if (n.getWord().equals(target.getTarget())) {
-            //System.out.println(depth);
-            if(!target.isHopsSet() || target.getHops() == depth){
-                visited = new ArrayList<String>();
-                visited.add(n.getWord());
-                return true;
+     private static Pathf bfs(GraphNode f, Route target) {
+        LinkedList<Pathf> queue = new LinkedList<Pathf>();
+        queue.add(new Pathf(f));
+        do{
+            Pathf n = queue.poll();
+            for (GraphNode i: n.getHead().getNeighbours()) {
+                Pathf newPath = new Pathf(n.getPath(),i);
+                if(newPath.vaild()){
+                    queue.add(newPath);
+                }
             }
+
+            if (n.getHead().getWord().equals(target.getTarget())) {
+                 
+                if(!target.isHopsSet() || target.getHops() == n.size()){
+                    return n;
+                }
+            }            
             
-        }
-
-       
-
-        list.add(n.getWord());
-
-         
-         
-        for (int i = 0; i < n.size(); i++) {
-            boolean search = dfs(n.getNeighbour(i), target,depth++);
-
-            if (search) {
-                visited.add(n.getWord());
-                return true;
-            }
-        }
-        return false;
-            
-        }
+        }while(queue.peek() != null);
+        
+        return null;
+    }
 
      private static void find_valueNode() {
 
@@ -140,10 +134,7 @@ import java.util.*;
                      a = true;
                  }
              
-                 
              }
-         
-
              r.possible = b && a;
              
          }
@@ -166,15 +157,12 @@ import java.util.*;
         for(Route r:chains){
             //(r.getValue()+" "+ r.getTarget());
             if(r.possible){
-                list = new ArrayList<String>();
-               if(dfs(r.getValueNode(), r,2)){
+                Pathf path = bfs(r.getValueNode(),r);
                    //System.out.println(visited.size());
-                   for (int i = visited.size()-1; i> -1; i--) {
-                       System.out.print(visited.get(i) + " ");
-                   }
-                   System.out.println();
-               }
-               else{
+                if(path != null){
+                    System.out.println(path);
+                }
+               else {
                    System.out.print(r.getValue()+" "+r.getTarget()+" ");
                    if(r.isHopsSet()){
                        System.out.print(r.getHops());

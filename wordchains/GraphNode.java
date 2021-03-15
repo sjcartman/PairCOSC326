@@ -5,10 +5,10 @@ package wordchains;
  */
 import java.util.*;
 
-
 public class GraphNode {
     private String value;
     private ArrayList<GraphNode> neighbours = new ArrayList<GraphNode>();
+   
     private boolean neighboursSet = false;
 
     public void setNeighboursSet() {
@@ -28,8 +28,8 @@ public class GraphNode {
     public int size(){
         return neighbours.size();
     }
-    public GraphNode  getNeighbour(int index) {
-        return neighbours.get(index);
+    public ArrayList<GraphNode> getNeighbours( ) {
+        return neighbours;
     }
     public String getWord() {
         return value;
