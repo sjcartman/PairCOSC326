@@ -14,6 +14,8 @@ import java.util.*;
     private static ArrayList<GraphNode> nodes = new ArrayList<GraphNode>();
      // delcaration for the chain
     private static ArrayList<Route> chains = new ArrayList<Route>();
+
+
    
 
     private static void link() {
@@ -109,12 +111,31 @@ import java.util.*;
      /**
       * Using breath first search to connect the word chains
       */
+
+      private static GraphNode dfs(GraphNode n, Route target,int depth) {
+        
+        if(depth > target.getHops()){
+            return null;
+        }
+        if (n.getWord().equals(target) && depth == target.getHops()) {
+            return n;
+        }
+        
+        for (GraphNode i: n.getNeighbours()) {
+                i.setPreviousNode(n);
+                GraphNode search = dfs(i, target, depth++);
+
+                if (search != null) {
+                    return n;
+                }
+        }
+        return null;
+            
+    }
+
+
      private static GraphNode bfs(GraphNode f, Route target) {
         LinkedList<GraphNode> queue = new LinkedList<GraphNode>();
-        for(GraphNode i: nodes){
-            i.resetPreviousNode();
-        }
-
         queue.add(f);
         while(queue.peek() != null){
             
@@ -173,10 +194,28 @@ import java.util.*;
         for(Route r:chains){
             //(r.getValue()+" "+ r.getTarget());
             if(r.possible){
-                Pathf path = bfs(r.getValueNode(),r);
+                for(GraphNode i: nodes){
+                    i.resetPreviousNode();
+                }
+                GraphNode path = null;
+                if(r.isHopsSet()){
+                    path = dfs(r.getValueNode(),r,1);
+                }
+                else{
+                    path = bfs(r.getValueNode(),r);
+                }
+                
                    //System.out.println(visited.size());
+                
                 if(path != null){
-                    System.out.println(path);
+                    GraphNode x = r.getValueNode();
+                    StringBuilder s = new StringBuilder();
+                    while(x != null){
+                        s.append(x.getWord());
+                        s.append(" ");
+                        x = path.getPreviousNode();
+                    };
+                    System.out.println(s);
                 }
                else {
                    System.out.print(r.getValue()+" "+r.getTarget()+" ");
