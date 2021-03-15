@@ -117,7 +117,7 @@ import java.util.*;
         if(depth > target.getHops()){
             return null;
         }
-        if (n.getWord().equals(target) && depth == target.getHops()) {
+        if (n.getWord().equals(target.getTarget()) && depth == target.getHops()) {
             return n;
         }
         
