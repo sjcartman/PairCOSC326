@@ -14,6 +14,7 @@ import java.util.*;
     private static ArrayList<GraphNode> nodes = new ArrayList<GraphNode>();
      // delcaration for the chain
     private static ArrayList<Route> chains = new ArrayList<Route>();
+   
 
     private static void link() {
         for(GraphNode i :nodes){
@@ -50,45 +51,58 @@ import java.util.*;
         Scanner scan = new Scanner(System.in);
         while (scan.hasNextLine()) {
             String line = scan.nextLine();
-            if (line.length() == 0) {
+            if (line.length() == 0 && readingWordList) {
+                System.err.println("Empty Line");
+                return;
+            }
+            
+            else if (line.length() == 0) {
                 readingWordList = true;
             }
             else if (!readingWordList) {
                 try{
                  
-                Scanner scanLine = new Scanner(line);
-                String word1 = scanLine.next(); 
-                String word2 = scanLine.next();
-                if(scanLine.hasNextInt()) {
-                    int i = scanLine.nextInt();
-                    chains.add(new Route(word1,word2,i));
-                }
-                else {
-                    chains.add(new Route(word1,word2));
-                }
+                    Scanner scanLine = new Scanner(line);
+                    String word1 = scanLine.next(); 
+                    String word2 = scanLine.next();
+                    if(scanLine.hasNextInt()) {
+                        int i = scanLine.nextInt();
+                        chains.add(new Route(word1,word2,i));
+                    }
+                    else {
+                        chains.add(new Route(word1,word2));
+                    }
+                    scanLine.close();
                 
                 }catch(Exception e){
-                    System.err.println("Invalid");
+                    System.err.println("Invalid input: "+line);
                 }
             }
             
             else if (readingWordList) {
                 Scanner scanLine = new Scanner(line);
-                String s = scanLine.next();
-                boolean set = true; ;
-                for(GraphNode n:nodes){
-                    if(n.getWord().equals(s)){
-                       System.err.println("Invalid");
-                       set = false;
+                try {
+                    String s = scanLine.next();
+                    boolean set = true; ;
+                    for(GraphNode n:nodes){
+                        if(n.getWord().equals(s)){
+                        System.err.println("Invalid input: "+line);
+                        set = false;
+                        }
                     }
-                }
-                if(set){
-                    nodes.add(new GraphNode(s));
-                }
+                    if(set){
+                        nodes.add(new GraphNode(s));
+                    }
                 
+                } catch (Exception e) {
+                    System.err.println("Invalid input: "+line);
+                }
+                scanLine.close();
+               
             }
 
         }
+        scan.close();
     }
     
 
@@ -98,8 +112,10 @@ import java.util.*;
      private static Pathf bfs(GraphNode f, Route target) {
         LinkedList<Pathf> queue = new LinkedList<Pathf>();
         queue.add(new Pathf(f));
-        do{
+        while(queue.peek() != null){
+            
             Pathf n = queue.poll();
+            //System.out.println(n);
             for (GraphNode i: n.getHead().getNeighbours()) {
                 Pathf newPath = new Pathf(n.getPath(),i);
                 if(newPath.vaild()){
@@ -114,7 +130,7 @@ import java.util.*;
                 }
             }            
             
-        }while(queue.peek() != null);
+        };
         
         return null;
     }
