@@ -179,6 +179,9 @@ import java.util.*;
 	 
     public static void main (String[] args) {
         getInput();
+        for(GraphNode b : nodes){
+            System.out.println(b.getWord());
+        }
         link();
         find_valueNode();
         //for (GraphNode g: nodes) {
