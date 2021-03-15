@@ -109,26 +109,26 @@ import java.util.*;
      /**
       * Using breath first search to connect the word chains
       */
-     private static Pathf bfs(GraphNode f, Route target) {
-        LinkedList<Pathf> queue = new LinkedList<Pathf>();
-        queue.add(new Pathf(f));
+     private static GraphNode bfs(GraphNode f, Route target) {
+        LinkedList<GraphNode> queue = new LinkedList<GraphNode>();
+        for(GraphNode i: nodes){
+            i.resetPreviousNode();
+        }
+
+        queue.add(f);
         while(queue.peek() != null){
             
-            Pathf n = queue.poll();
-            //System.out.println(n);
-            for (GraphNode i: n.getHead().getNeighbours()) {
-                Pathf newPath = new Pathf(n.getPath(),i);
-                if(newPath.vaild()){
-                    queue.add(newPath);
-                }
+            GraphNode n = queue.poll();
+            if(n.getWord().equals(target.getValue())){
+                return n;
             }
-
-            if (n.getHead().getWord().equals(target.getTarget())) {
-                 
-                if(!target.isHopsSet() || target.getHops() == n.size()){
-                    return n;
+            //System.out.println(n);
+            for (GraphNode i: n.getNeighbours()) {
+                if(i.getPreviousNode() == null){
+                    i.setPreviousNode(n);
+                    queue.add(i);
                 }
-            }            
+            }           
             
         };
         
