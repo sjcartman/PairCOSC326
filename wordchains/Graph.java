@@ -174,11 +174,8 @@ public class Graph {
          }
      }
 	 
-    public static void main (String[] args) {
+     public static void main (String[] args) {
         getInput();
-        for(GraphNode b : nodes){
-            System.out.println(b.getWord());
-        }
         link();
         find_valueNode();
         //for (GraphNode g: nodes) {
@@ -194,28 +191,10 @@ public class Graph {
         for(Route r:chains){
             //(r.getValue()+" "+ r.getTarget());
             if(r.possible){
-                for(GraphNode i: nodes){
-                    i.resetPreviousNode();
-                }
-                GraphNode path = null;
-                if(r.isHopsSet()){
-                    path = dfs(r.getValueNode(),r,1);
-                }
-                else{
-                    path = bfs(r.getValueNode(),r);
-                }
-                
+                GraphNode path = bfs(r.getValueNode(),r);
                    //System.out.println(visited.size());
-                
                 if(path != null){
-                    GraphNode x = r.getValueNode();
-                    StringBuilder s = new StringBuilder();
-                    while(x != null){
-                        s.append(x.getWord());
-                        s.append(" ");
-                        x = path.getPreviousNode();
-                    };
-                    System.out.println(s);
+                    System.out.println(path);
                 }
                else {
                    System.out.print(r.getValue()+" "+r.getTarget()+" ");
