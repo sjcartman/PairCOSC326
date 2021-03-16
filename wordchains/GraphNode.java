@@ -7,8 +7,9 @@ import java.util.*;
 
 public class GraphNode {
     private String value;
-    private ArrayList<GraphNode> neighbours;
+    private ArrayList<GraphNode> neighbours = new ArrayList<GraphNode>();
     private GraphNode previousNode;
+    private boolean neighboursSet = false;
 
     public void resetPreviousNode(){
         previousNode = null;
@@ -19,9 +20,6 @@ public class GraphNode {
     public GraphNode getPreviousNode(){
         return previousNode;
     }
-   
-    private boolean neighboursSet = false;
-
     public void setNeighboursSet() {
         neighboursSet = true;
     }
