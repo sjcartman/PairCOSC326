@@ -16,31 +16,57 @@ import java.util.*;
     private static ArrayList<Route> chains = new ArrayList<Route>();
    
 
-    private static void link() {
-        for(GraphNode i :nodes){
-            if (!i.getNeighboursSet()) {
-                for (GraphNode j:nodes){
-		    // convert string to character
-                    int totalDifferences = 0;
-                    char[] jChars = j.getWord().toCharArray();
-                    char[] iChars = i.getWord().toCharArray();
-                    if (iChars.length == jChars.length) {
-                        for (int k = 0; k < jChars.length;k++) {
-                            if (jChars[k] != iChars[k]) {
-                                totalDifferences++;
-                            }
-                        }
-			// Add to counter if there is a change in character
-                        if (totalDifferences == 1) {
-                            i.addNeighbour(j);
-                        }   
-                    }
+    // private static void link() {
+    //     for(GraphNode i :nodes){
+    //         if (!i.getNeighboursSet()) {
+    //             for (GraphNode j:nodes){
+    // 		    // convert string to character
+    //                 int totalDifferences = 0;
+    //                 char[] jChars = j.getWord().toCharArray();
+    //                 char[] iChars = i.getWord().toCharArray();
+    //                 if (iChars.length == jChars.length) {
+    //                     for (int k = 0; k < jChars.length;k++) {
+    //                         if (jChars[k] != iChars[k]) {
+    //                             totalDifferences++;
+    //                         }
+    //                     }
+    // 			// Add to counter if there is a change in character
+    //                     if (totalDifferences == 1) {
+    //                         i.addNeighbour(j);
+    //                     }   
+    //                 }
                     
-                }
-            }
-            i.setNeighboursSet();
-        }
-    }
+    //             }
+    //         }
+    //         i.setNeighboursSet();
+    //     }
+    // }
+
+     private static void link() {
+	 TreeSet<String> ts = new TreeSet<String>();
+	 int totalDifferences = 0;
+
+	 assertTrue(ts.add(getNeighboursSet()));
+
+	 Iterator<String> itr = ts.iterator();
+	 while (itr.hasNext()) {
+	     String exists = itr.next();
+	     if (exists.equals(nodes)) {
+		 itr.remove();
+	     }
+	     char[] iChars = itr.getWord().toCharArray();
+	     char[] jChars = nodes.getWord().toCharArray();
+
+	     if (iChars.length == jChars.length) {
+		 for (int k=0; k <jChars.length; k++) {
+		     totalDifferences++;
+		 }
+		 if (totalDifferences == 1) {
+		     assertTrue(ts.add(nodes));
+		 }
+	     }
+	 }
+     }
 
      /**
       * Gets the input from stdin
@@ -200,5 +226,3 @@ import java.util.*;
     }
 
  }
-
-         
