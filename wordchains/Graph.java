@@ -16,33 +16,33 @@ import java.util.*;
     private static ArrayList<Route> chains = new ArrayList<Route>();
    
 
-    // private static void link() {
-    //     for(GraphNode i :nodes){
-    //         if (!i.getNeighboursSet()) {
-    //             for (GraphNode j:nodes){
-    // 		    // convert string to character
-    //                 int totalDifferences = 0;
-    //                 char[] jChars = j.getWord().toCharArray();
-    //                 char[] iChars = i.getWord().toCharArray();
-    //                 if (iChars.length == jChars.length) {
-    //                     for (int k = 0; k < jChars.length;k++) {
-    //                         if (jChars[k] != iChars[k]) {
-    //                             totalDifferences++;
-    //                         }
-    //                     }
-    // 			// Add to counter if there is a change in character
-    //                     if (totalDifferences == 1) {
-    //                         i.addNeighbour(j);
-    //                     }   
-    //                 }
-                    
-    //             }
-    //         }
-    //         i.setNeighboursSet();
-    //     }
-    // }
-
      private static void link() {
+         for(GraphNode i :nodes){
+             if (!i.getNeighboursSet()) {
+                 for (GraphNode j:nodes){
+    	    // convert string to character
+                   int totalDifferences = 0;
+                   char[] jChars = j.getWord().toCharArray();
+                    char[] iChars = i.getWord().toCharArray();
+                    if (iChars.length == jChars.length) {
+                        for (int k = 0; k < jChars.length;k++) {
+                             if (jChars[k] != iChars[k]) {
+                               totalDifferences++;
+                             }
+                         }
+     			// Add to counter if there is a change in character
+                         if (totalDifferences == 1) {
+                             i.addNeighbour(j);
+                         }   
+                     }
+                    
+                 }
+             }
+             i.setNeighboursSet();
+         }
+    }
+
+     private static void link2() {
 	 TreeSet<String> ts = new TreeSet<String>();
 	 int totalDifferences = 0;
 
