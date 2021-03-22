@@ -5,11 +5,15 @@ package wordchains;
  */
 import java.util.*;
 
-public class GraphNode {
+public class GraphNode implements Comparable<GraphNode> {
     private String value;
     private ArrayList<GraphNode> neighbours = new ArrayList<GraphNode>();
     private GraphNode previousNode;
     private boolean neighboursSet = false;
+
+    public int compareTo(GraphNode s){
+        return value.compareTo(s.getWord());
+    }
 
     public void resetPreviousNode(){
         previousNode = null;

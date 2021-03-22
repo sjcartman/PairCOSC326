@@ -7,66 +7,62 @@ package wordchains;
  * @author Susie Tay 5717090
  */
 import java.util.*;
+import java.util.Map.Entry;
 
 
  public class Graph {
      // declaration for input
-    private static ArrayList<GraphNode> nodes = new ArrayList<GraphNode>();
+    private static TreeMap<String,GraphNode> nodes = new TreeMap<String,GraphNode>();
      // delcaration for the chain
     private static ArrayList<Route> chains = new ArrayList<Route>();
+    private static final char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray();
    
 
-     private static void link() {
-         for(GraphNode i :nodes){
-             if (!i.getNeighboursSet()) {
-                 for (GraphNode j:nodes){
-    	    // convert string to character
-                   int totalDifferences = 0;
-                   char[] jChars = j.getWord().toCharArray();
-                    char[] iChars = i.getWord().toCharArray();
-                    if (iChars.length == jChars.length) {
-                        for (int k = 0; k < jChars.length;k++) {
-                             if (jChars[k] != iChars[k]) {
-                               totalDifferences++;
-                             }
-                         }
-     			// Add to counter if there is a change in character
-                         if (totalDifferences == 1) {
-                             i.addNeighbour(j);
-                         }   
-                     }
+    //  private static void link() {
+    //      for(GraphNode i :nodes){
+    //          if (!i.getNeighboursSet()) {
+    //              for (GraphNode j:nodes){
+    // 	    // convert string to character
+    //                int totalDifferences = 0;
+    //                char[] jChars = j.getWord().toCharArray();
+    //                 char[] iChars = i.getWord().toCharArray();
+    //                 if (iChars.length == jChars.length) {
+    //                     for (int k = 0; k < jChars.length;k++) {
+    //                          if (jChars[k] != iChars[k]) {
+    //                            totalDifferences++;
+    //                          }
+    //                      }
+    //  			// Add to counter if there is a change in character
+    //                      if (totalDifferences == 1) {
+    //                          i.addNeighbour(j);
+    //                      }   
+    //                  }
                     
-                 }
-             }
-             i.setNeighboursSet();
-         }
-    }
+    //              }
+    //          }
+    //          i.setNeighboursSet();
+    //      }
+    // }
 
-        // private static void link2() {
-        // TreeSet<String> ts = new TreeSet<String>();
-        // int totalDifferences = 0;
+        private static void link() {
+            for(Entry<String, GraphNode> n: nodes.entrySet()){
+                //System.out.println("ssss");
+                String a = n.getValue().getWord();
+                for(int i =0; i < a.length();i++){
+                    for(char c : alphabet){
+                        StringBuilder s = new StringBuilder(a);
+                        s.setCharAt(i, c);
+                        GraphNode g = nodes.get(s.toString());
+                        if(g != null){
+                            n.getValue().addNeighbour(g);
+                        }
+                        
+                    }
+                    
+                }
 
-        // assertTrue(ts.add(getNeighboursSet()));
-
-        // Iterator<String> itr = ts.iterator();
-        // while (itr.hasNext()) {
-        //     String exists = itr.next();
-        //     if (exists.equals(nodes)) {
-        //     itr.remove();
-        //     }
-        //     char[] iChars = itr.getWord().toCharArray();
-        //     char[] jChars = nodes.getWord().toCharArray();
-
-        //     if (iChars.length == jChars.length) {
-        //     for (int k=0; k <jChars.length; k++) {
-        //         totalDifferences++;
-        //     }
-        //     if (totalDifferences == 1) {
-        //         assertTrue(ts.add(nodes));
-        //     }
-        //     }
-        // }
-        // }
+            }
+        }
 
     /**
      * Gets the input from stdin
@@ -107,21 +103,17 @@ import java.util.*;
            
            else if (readingWordList) {
                Scanner scanLine = new Scanner(line);
+               String word = "";
                try {
-                   String s = scanLine.next();
-                   boolean set = true; ;
-                   for(GraphNode n:nodes){
-                       if(n.getWord().equals(s)){
-                       System.err.println("Invalid input: "+line);
-                       set = false;
-                       }
-                   }
-                   if(set){
-                       nodes.add(new GraphNode(s));
-                   }
-               
-               } catch (Exception e) {
+                    word = scanLine.next();
+               }catch (Exception e) {
                    System.err.println("Invalid input: "+line);
+               }
+               if(scanLine.hasNext()){
+                    System.err.println("Invalid input : "+line);
+               }
+               else{
+                   nodes.put(word,new GraphNode(word));
                }
                scanLine.close();
               
@@ -140,6 +132,7 @@ import java.util.*;
         if(depth > target.getHops()){
             return null;
         }
+        //System.out.println(n.getWord());
         if (n.getWord().equals(target.getTarget()) && depth == target.getHops()) {
             return n;
         }
@@ -148,7 +141,7 @@ import java.util.*;
                 i.setPreviousNode(n);
                 GraphNode search = dfs(i, target, depth+1 );
                 if (search != null) {
-                    return n;
+                    return search;
                 }
         }
         return null;
@@ -187,12 +180,12 @@ import java.util.*;
              boolean b = false;
              boolean a = false;
              
-             for (GraphNode n: nodes) {
+             for (Entry<String, GraphNode> n: nodes.entrySet()) {
                  // check chains
-                 if (r.getValue().equals(n.getWord())) {
-                     r.setValuenode(n);
+                 if (r.getValue().equals(n.getValue().getWord())) {
+                     r.setValuenode(n.getValue());
                      b = true;
-                 } else if (r.getTarget().equals(n.getWord())) {
+                 } else if (r.getTarget().equals(n.getValue().getWord())) {
                      a = true;
                  }
              
@@ -221,8 +214,8 @@ import java.util.*;
 		
         for(Route r:chains){
             //(r.getValue()+" "+ r.getTarget());
-                for(GraphNode i: nodes){
-                    i.resetPreviousNode();
+                for(Entry<String, GraphNode> n: nodes.entrySet()){
+                    n.getValue().resetPreviousNode();
                 }
                 GraphNode path = null;
                 r.getValueNode().setPreviousNode(r.getValueNode());
