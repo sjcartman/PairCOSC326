@@ -6,9 +6,49 @@ public class Route {
     private String value;
     private String target;
     private int hops;
-    private boolean hopsSet;
+    private boolean hopsSet = false;
     private GraphNode valueNode;
-    public boolean possible = false;
+    private boolean possible = true;
+    private String line;
+
+
+
+    public void setValues(String a, String b){
+        value = a;
+        target = b;
+    }
+    public void setHops(int i){
+        hops = i;
+        hopsSet = true;
+    }
+
+    public boolean isPossible(){
+        return possible;
+    }
+
+    public void impossible(){
+        possible = false;
+    }
+
+    public String toString(){
+        if(line != null && !possible){
+            return "Invalid : "+line;
+        }
+        else if(!possible){
+            return "Invalid";
+        }
+        
+        StringBuilder s = new StringBuilder(value);
+        s.append(" ");
+        s.append(target);
+        if(hopsSet){
+            s.append(" ");
+            s.append(hops);
+        }
+        s.append(" impossible");
+        return s.toString();
+        
+    }
 
     public void setValuenode(GraphNode g) {
         valueNode = g;
@@ -22,26 +62,11 @@ public class Route {
      * @param inValue value of the word
      * @param inTarget target of the word
      */
-    public Route (String inValue, String inTarget) {
-        
-        value = inValue;
-        target = inTarget;
-        hopsSet = false;
+    public Route (String inValue) {
+        line = inValue;
     }
 
-      /** sets the value of data field to input parameter value with int input
-     * @param inValue value of the word
-     * @param inTarget target of the word
-     * @param inHops hops of the integer value
-     */
-
-    public Route(String inValue,String inTarget, int inHops) {
-        value = inValue;
-        target = inTarget;
-        hopsSet = true;
-        hops = inHops;
-    }
-    
+  
     /**
      * returns the value of the data field value
      * @return the value of the word

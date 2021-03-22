@@ -9,7 +9,6 @@ package wordchains;
 import java.util.*;
 import java.util.Map.Entry;
 
-
  public class Graph {
      // declaration for input
     private static TreeMap<String,GraphNode> nodes = new TreeMap<String,GraphNode>();
@@ -74,7 +73,7 @@ import java.util.Map.Entry;
        while (scan.hasNextLine()) {
            String line = scan.nextLine();
            if (line.length() == 0 && readingWordList) {
-               System.err.println("Empty Line");
+               System.err.println("Unexpected empty line found, Stopping input read");
                return;
            }
            
@@ -82,22 +81,21 @@ import java.util.Map.Entry;
                readingWordList = true;
            }
            else if (!readingWordList) {
+               Route z = new Route(line);
                try{
-                
+                  
                    Scanner scanLine = new Scanner(line);
                    String word1 = scanLine.next(); 
                    String word2 = scanLine.next();
+                   z.setValues(word1, word2);
                    if(scanLine.hasNextInt()) {
-                       int i = scanLine.nextInt();
-                       chains.add(new Route(word1,word2,i));
+                        z.setHops(scanLine.nextInt());
                    }
-                   else {
-                       chains.add(new Route(word1,word2));
-                   }
+                   chains.add(z);
                    scanLine.close();
                
                }catch(Exception e){
-                   System.err.println("Invalid input: "+line);
+                   z.impossible();
                }
            }
            
@@ -127,25 +125,33 @@ import java.util.Map.Entry;
       * Using breath first search to connect the word chains
       */
 
-      private static GraphNode dfs(GraphNode n, Route target,int depth) {
-        
-        if(depth > target.getHops()){
-            return null;
-        }
-        //System.out.println(n.getWord());
-        if (n.getWord().equals(target.getTarget()) && depth == target.getHops()) {
-            return n;
-        }
-        
-        for (GraphNode i: n.getNeighbours()) {
-                i.setPreviousNode(n);
-                GraphNode search = dfs(i, target, depth+1 );
-                if (search != null) {
-                    return search;
+      private static LinkedList<String> dfs(GraphNode n, Route target) {
+
+        Stack<LinkedList<GraphNode>> s = new Stack<LinkedList< GraphNode>>();
+        LinkedList<GraphNode> l = new LinkedList<GraphNode>();
+        l.add(n);
+        s.push(l);
+        while(!s.empty()){
+            l = s.pop();
+            n = l.getLast();
+            if(l.size() < target.getHops()){
+                for(GraphNode a : n.getNeighbours()){
+                    if(!l.contains(a)){
+                        LinkedList<GraphNode> newList = new LinkedList<GraphNode>(l);
+                        newList.add(a);
+                        s.push(newList);
+                    }
                 }
+            }else if(n.getWord().equals(target.getTarget())) {
+                LinkedList<String> rL = new LinkedList<String>();
+                while(!l.isEmpty()){
+                    rL.add(l.removeFirst().getWord());
+                }
+                return rL;
+                
+            }   
         }
-        return null;
-            
+        return null;   
     }
 
 
@@ -155,13 +161,11 @@ import java.util.Map.Entry;
 
         while(queue.peek() != null){
             GraphNode n = queue.poll();
-            //System.out.println(n.getWord());
             if(n.getWord().equals(target.getTarget())){
-                //System.out.println(n.getWord());
-                //f.resetPreviousNode();
+               
                 return n;
             }
-            //System.out.println(n);
+            
             for (GraphNode i: n.getNeighbours()) {
                 if(i.getPreviousNode() == null){
                     i.setPreviousNode(n);
@@ -170,29 +174,20 @@ import java.util.Map.Entry;
             }           
             
         }
-        //f.resetPreviousNode();
         return null;
     }
 
      private static void find_valueNode() {
 
          for (Route r: chains) {
-             boolean b = false;
-             boolean a = false;
-             
-             for (Entry<String, GraphNode> n: nodes.entrySet()) {
-                 // check chains
-                 if (r.getValue().equals(n.getValue().getWord())) {
-                     r.setValuenode(n.getValue());
-                     b = true;
-                 } else if (r.getTarget().equals(n.getValue().getWord())) {
-                     a = true;
-                 }
-             
-             }
-             r.possible = b && a;
-             
-         }
+            GraphNode n = nodes.get(r.getValue());
+            if(n != null){
+                r.setValuenode(n);
+            }
+            else{
+                r.impossible();
+            }
+        }
      }
 	 
      public static void main (String[] args) {
@@ -211,45 +206,46 @@ import java.util.Map.Entry;
             //System.out.println();
         //}
         //System.out.println();
-		
+        
         for(Route r:chains){
             //(r.getValue()+" "+ r.getTarget());
-                for(Entry<String, GraphNode> n: nodes.entrySet()){
-                    n.getValue().resetPreviousNode();
-                }
+            if(r.isPossible()){
+                
                 GraphNode path = null;
                 r.getValueNode().setPreviousNode(r.getValueNode());
+                LinkedList<String> a= null;
                 if(r.isHopsSet()){
-                    path = dfs(r.getValueNode(),r,1);
+                    a = dfs(r.getValueNode(),r);
                 }
                 else{
-                    //System.out.println(chains.get(0).getTarget() + chains.get(0).getValue());
-                    path = bfs(r.getValueNode(),r);
-                }
-                r.getValueNode().resetPreviousNode();
-                //System.out.println(path.getPreviousNode().getWord());
-                //System.out.println(visited.size());
-                
-                if(path != null){
-                    ArrayList<String> a= new ArrayList<String>();
-                    a.add(path.getWord());
-                    while(path.getPreviousNode() != null){
-                        //System.out.println(path.getWord());
-                        path = path.getPreviousNode();
-                        a.add(path.getWord());
-                    };
-                    for(int j=a.size()-1; j >= 0;j--){
-                        System.out.print(a.get(j)+ " ");
+                    for(Entry<String, GraphNode> n: nodes.entrySet()){
+                        n.getValue().resetPreviousNode();
                     }
-                    System.out.println();
+                    path = bfs(r.getValueNode(),r);
+                    a = new LinkedList<String>();
+                    r.getValueNode().resetPreviousNode();
+                    if(path != null){
+                        a.add(path.getWord());
+                        while(path.getPreviousNode() != null){
+                            path = path.getPreviousNode();
+                            a.add(path.getWord());
+                        }
+                    }
                 }
-           else{
-                System.out.print(r.getValue()+" "+r.getTarget()+" ");
-                   if(r.isHopsSet()){
-                       System.out.print(r.getHops());
-                   }
-                System.out.println(" impossible");
-           }
+                if(a != null){
+                    StringBuilder b = new StringBuilder();
+                    while(!a.isEmpty()){
+                        b.append(a.removeFirst());
+                        b.append(" ");
+                    }
+                    System.out.println(b.toString());
+                }
+                else{
+                        System.out.println(r);
+                }
+            }else{
+                System.out.println(r);
+            }
 
         }
 
