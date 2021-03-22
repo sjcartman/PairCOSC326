@@ -1,0 +1,9 @@
+cap
+cap cut
+
+cat
+
+cut
+cap
+cat
+dog

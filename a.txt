@@ -1,0 +1,13 @@
+cat cup
+cap cup 4
+cat dog 3
+emu kea
+flu covid
+car cat
+
+cat
+cup
+dog
+cap
+cut
+elephant
