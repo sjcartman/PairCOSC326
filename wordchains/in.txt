@@ -1,11 +1,10 @@
 cat car
-cat car 2
-cat car 3
-cat car -1
-dog
+cat car 
+cat car 
+cat car 
 dog cat
-dog cat two
-dog cat 4
+dog cat 
+dog cat
 
 cat
 car
