@@ -1,51 +1,11 @@
-cat cup
-cap cup 4
-cat dog 3
-emu kea
-flu coivd
-car cat
-cat cup 5
-wolf wool 3
-emu eat
-emu eat 5
-flu flo 4
-kea kin 3
-kea ken 4
-cool cake 3
-cool cake 
-show sign 3
-eggs edit 3
-jelly jived 3
+cat car
+cat car 2
+cat car 3
+cat car -1
+dog
+dog cat
+dog cat two
+dog cat 4
 
 cat
-cup
-dog
-cap
-cut
-elephant
-emu
-tiger
-eat
-cab
-wolf
-wool
-flu
-flo
-kea
-kin
-cot
-kfc
-ken
-cake
-cool
-show
-shows
-sign
-edit
-eggs
-eyes
-jelly
-jived
-errie
-jokes
 car

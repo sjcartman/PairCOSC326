@@ -33,6 +33,7 @@ public class Graph {
            // Add to counter if there is a change in character
                        if (totalDifferences == 1) {
                            i.addNeighbour(j);
+
                        }   
                    }
                    
@@ -120,8 +121,7 @@ public class Graph {
         
         for (GraphNode i: n.getNeighbours()) {
                 i.setPreviousNode(n);
-                GraphNode search = dfs(i, target, depth++);
-
+                GraphNode search = dfs(i, target, depth+1 );
                 if (search != null) {
                     return n;
                 }
@@ -134,10 +134,13 @@ public class Graph {
      private static GraphNode bfs(GraphNode f, Route target) {
         LinkedList<GraphNode> queue = new LinkedList<GraphNode>();
         queue.add(f);
+
         while(queue.peek() != null){
-            
             GraphNode n = queue.poll();
-            if(n.getWord().equals(target.getValue())){
+            //System.out.println(n.getWord());
+            if(n.getWord().equals(target.getTarget())){
+                //System.out.println(n.getWord());
+                //f.resetPreviousNode();
                 return n;
             }
             //System.out.println(n);
@@ -148,8 +151,8 @@ public class Graph {
                 }
             }           
             
-        };
-        
+        }
+        //f.resetPreviousNode();
         return null;
     }
 
@@ -176,8 +179,11 @@ public class Graph {
 	 
      public static void main (String[] args) {
         getInput();
+        
         link();
+        
         find_valueNode();
+        
         //for (GraphNode g: nodes) {
           //   System.out.print(g.getWord()+ " : ");
 	    
@@ -190,20 +196,35 @@ public class Graph {
 		
         for(Route r:chains){
             //(r.getValue()+" "+ r.getTarget());
-            if(r.possible){
-                GraphNode path = bfs(r.getValueNode(),r);
-                   //System.out.println(visited.size());
-                if(path != null){
-                    System.out.println(path);
+                for(GraphNode i: nodes){
+                    i.resetPreviousNode();
                 }
-               else {
-                   System.out.print(r.getValue()+" "+r.getTarget()+" ");
-                   if(r.isHopsSet()){
-                       System.out.print(r.getHops());
-                   }
-                   System.out.println(" impossible");
-               }
-           }
+                GraphNode path = null;
+                r.getValueNode().setPreviousNode(r.getValueNode());
+                if(r.isHopsSet()){
+                    path = dfs(r.getValueNode(),r,1);
+                }
+                else{
+                    //System.out.println(chains.get(0).getTarget() + chains.get(0).getValue());
+                    path = bfs(r.getValueNode(),r);
+                }
+                r.getValueNode().resetPreviousNode();
+                //System.out.println(path.getPreviousNode().getWord());
+                //System.out.println(visited.size());
+                
+                if(path != null){
+                    ArrayList<String> a= new ArrayList<String>();
+                    a.add(path.getWord());
+                    while(path.getPreviousNode() != null){
+                        //System.out.println(path.getWord());
+                        path = path.getPreviousNode();
+                        a.add(path.getWord());
+                    };
+                    for(int j=a.size()-1; j >= 0;j--){
+                        System.out.print(a.get(j)+ " ");
+                    }
+                    System.out.println();
+                }
            else{
                 System.out.print(r.getValue()+" "+r.getTarget()+" ");
                    if(r.isHopsSet()){
