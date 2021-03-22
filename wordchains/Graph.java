@@ -9,12 +9,37 @@ package wordchains;
 import java.util.*;
 
 
-public class Graph {
-    // declaration for input
-   private static ArrayList<GraphNode> nodes = new ArrayList<GraphNode>();
-    // delcaration for the chain
-   private static ArrayList<Route> chains = new ArrayList<Route>();
-  
+ public class Graph {
+     // declaration for input
+    private static ArrayList<GraphNode> nodes = new ArrayList<GraphNode>();
+     // delcaration for the chain
+    private static ArrayList<Route> chains = new ArrayList<Route>();
+
+        // private static void link2() {
+        // TreeSet<String> ts = new TreeSet<String>();
+        // int totalDifferences = 0;
+
+        // assertTrue(ts.add(getNeighboursSet()));
+
+        // Iterator<String> itr = ts.iterator();
+        // while (itr.hasNext()) {
+        //     String exists = itr.next();
+        //     if (exists.equals(nodes)) {
+        //     itr.remove();
+        //     }
+        //     char[] iChars = itr.getWord().toCharArray();
+        //     char[] jChars = nodes.getWord().toCharArray();
+
+        //     if (iChars.length == jChars.length) {
+        //     for (int k=0; k <jChars.length; k++) {
+        //         totalDifferences++;
+        //     }
+        //     if (totalDifferences == 1) {
+        //         assertTrue(ts.add(nodes));
+        //     }
+        //     }
+        // }
+        // }
 
    private static void link() {
        for(GraphNode i :nodes){
@@ -239,5 +264,3 @@ public class Graph {
     }
 
  }
-
-         
