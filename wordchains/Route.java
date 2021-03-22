@@ -10,6 +10,7 @@ public class Route {
     private GraphNode valueNode;
     private boolean possible = true;
     private String line;
+    private String message;
 
 
 
@@ -26,13 +27,14 @@ public class Route {
         return possible;
     }
 
-    public void impossible(){
+    public void impossible(String msg){
         possible = false;
+        message = msg;
     }
 
     public String toString(){
         if(line != null && !possible){
-            return "Invalid : "+line;
+            return message+" : "+line;
         }
         else if(!possible){
             return "Invalid";

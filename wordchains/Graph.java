@@ -95,7 +95,7 @@ import java.util.Map.Entry;
                    scanLine.close();
                
                }catch(Exception e){
-                   z.impossible();
+                   z.impossible("Invalid : ");
                }
            }
            
@@ -105,10 +105,10 @@ import java.util.Map.Entry;
                try {
                     word = scanLine.next();
                }catch (Exception e) {
-                   System.err.println("Invalid input: "+line);
+                   System.err.println("Invalid :"+line);
                }
                if(scanLine.hasNext()){
-                    System.err.println("Invalid input : "+line);
+                    System.err.println("Invalid : "+line);
                }
                else{
                    nodes.put(word,new GraphNode(word));
@@ -145,7 +145,7 @@ import java.util.Map.Entry;
             }else if(n.getWord().equals(target.getTarget())) {
                 LinkedList<String> rL = new LinkedList<String>();
                 while(!l.isEmpty()){
-                    rL.add(l.removeFirst().getWord());
+                    rL.add(l.removeLast().getWord());
                 }
                 return rL;
                 
@@ -180,12 +180,13 @@ import java.util.Map.Entry;
      private static void find_valueNode() {
 
          for (Route r: chains) {
-            GraphNode n = nodes.get(r.getValue());
-            if(n != null){
-                r.setValuenode(n);
+            GraphNode a = nodes.get(r.getValue());
+            GraphNode b = nodes.get(r.getTarget());
+            if(a != null && b != null){
+                r.setValuenode(a);
             }
             else{
-                r.impossible();
+                r.impossible("Invalid(start or target word is not a known word) : ");
             }
         }
      }
