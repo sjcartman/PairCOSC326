@@ -236,7 +236,7 @@ import java.util.Map.Entry;
                 if(a != null){
                     StringBuilder b = new StringBuilder();
                     while(!a.isEmpty()){
-                        b.append(a.removeFirst());
+                        b.append(a.removeLast());
                         b.append(" ");
                     }
                     System.out.println(b.toString());
