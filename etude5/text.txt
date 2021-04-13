@@ -1,1 +1,18 @@
+Points to consider:
+1) time spent by passengers waiting - expected wait time
+2) distance travelled by elevator
+3) time taken to open and close the door
+4) diff type of request - internal, external
+5) direction - up, down
+6) status of elevator - idle, busy?
+7) simple - change direction only when elevator reaches top or bottom?
+8) efficient - 2 buttons external request?
 
+    public static final int CAPACTIY = 4;
+    public static final int NO_OF_FLOORS = 10;
+    public static final int TIME_BETWEEN_FLOORS = 5;
+    public static final int DOOR_OPEN_CLOSE = 10;
+    
+    private int current_floor;
+    private ArrayList<Person> passengers;
+    private int status;
