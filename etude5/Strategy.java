@@ -22,11 +22,11 @@ public class Strategy {
         Random rand = new Random();
 
         // generate random current floor
-        curF = rand.nextInt(NO_OF_FLOORS) + 1;
+        curF = rand.nextInt(NO_OF_FLOORS) ;
         println("current floor " + curF);
 
         // generate random persons
-        pass = rand.nextInt(CAPACITY) + 1;
+        pass = rand.nextInt(CAPACITY);
         println("no of pp " + pass);
 
         // generate destination floor depending on how many persons
@@ -39,7 +39,7 @@ public class Strategy {
 
         println(curF + "F | Number of passengers: " + pass);
 
-        if (pass > 0 && pass <= CAPACITY) {
+        //if (pass > 0 && pass <= CAPACITY) {
 
             listofFloors = new ArrayList<>();
             for (int i = 0; i < pass; i++) {
@@ -52,7 +52,7 @@ public class Strategy {
                 }
             }
 
-        }
+        //}
 
         move_elevator();
     }
@@ -77,7 +77,8 @@ public class Strategy {
             while (destinationFloors[shortest_path-1] > 0) {
                 println(destinationFloors[shortest_path-1]);
                 println("Getting off ... " + destinationFloors[shortest_path-1]-- + " passenger(s) at " + curF + "F.");
-                delay(2000);  //getting on and off
+                delay(2);  //getting on and off
+                println("xx");
 
             }
 
@@ -92,12 +93,12 @@ public class Strategy {
         int floor = 0;
 
         while (!validFloor) {
-            floor = prand.nextInt(NO_OF_FLOORS) + 1;
-println("curF " + curF );
-println("floor " + floor);
-           if (floor == curF) {
+            floor = prand.nextInt(NO_OF_FLOORS);
+            println("curF " + curF );
+            println("floor " + floor);
+            if (floor == curF) {
                 println("You are in " + curF + "F.");
-           } else {
+            } else {
                destinationFloors[floor]++;
                validFloor = true;
            }
@@ -110,12 +111,12 @@ println("floor " + floor);
 
     public  void goUp() {
         println(curF++ + "F | Going up ...");
-        delay(5000);
+        delay(2);
     }
 
     public  void goDown() {
         println(curF-- + "F | Going down ...");
-        delay(5000);
+        delay(3);
     }
 
     public  void println(Object o) {
@@ -142,7 +143,17 @@ println("floor " + floor);
 
         println("size " + listofFloors.size());
 
-        int shortest = curF - listofFloors.get(0);
+        int destination = listofFloors.get(0);
+        int shortest = 0;
+        if(curF > destination){
+            shortest = curF - Math.abs(curF-destination);
+        }
+        else if (curF < destination){
+            shortest = curF + Math.abs(curF-destination);
+            
+        }
+
+
         println("show lstofFloors " + listofFloors.get(0));
         println("Shortest " + shortest);
 
@@ -157,7 +168,7 @@ println("floor " + floor);
         shortest = listofFloors.get(temp);
         println("Shortest " + shortest);
 
-        listofFloors.set(temp, 10);
+        //listofFloors.set(temp, 10);
         return shortest;
     }
 }
