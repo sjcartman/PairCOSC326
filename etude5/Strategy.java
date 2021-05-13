@@ -59,8 +59,8 @@ public class Strategy {
 
     public  void move_elevator() {
 
-        for (int i =0; i < listofFloors.size(); i++) {
-            int shortest_path = findShortest();
+        for (int i : listofFloors) {
+            int shortest_path = findShortest(i);
 
             //println("To destination " + shortest_path + "F (" + destinationFloors[shortest_path-1] + ") Passengers");
             println("To destination " + shortest_path + "F.");
@@ -73,14 +73,16 @@ public class Strategy {
                 goDown();
             }
 
-
-            while (destinationFloors[shortest_path-1] > 0) {
-                println(destinationFloors[shortest_path-1]);
-                println("Getting off ... " + destinationFloors[shortest_path-1]-- + " passenger(s) at " + curF + "F.");
-                delay(2);  //getting on and off
-                println("xx");
-
+            if(curF == shortest_path){
+                println("arrived at floor: " + curF );
             }
+            // while (destinationFloors[shortest_path-1] > 0) {
+            //     println(destinationFloors[shortest_path-1]);
+            //     println("Getting off ... " + destinationFloors[shortest_path-1]-- + " passenger(s) at " + curF + "F.");
+            //     delay(2);  //getting on and off
+            //     println("xx");
+
+            // }
 
         }
     }
@@ -139,11 +141,11 @@ public class Strategy {
         // not sure yet
     }
 
-    public  int findShortest() {
+    public  int findShortest(int floor) {
 
         println("size " + listofFloors.size());
 
-        int destination = listofFloors.get(0);
+        int destination = floor;
         int shortest = 0;
         if(curF > destination){
             shortest = curF - Math.abs(curF-destination);
@@ -157,15 +159,15 @@ public class Strategy {
         println("show lstofFloors " + listofFloors.get(0));
         println("Shortest " + shortest);
 
-        int temp = 0;
+        //int temp = 0;
 
-        for (int i = 1; i < listofFloors.size(); i++) {
-            if (shortest > Math.abs(curF - listofFloors.get(i))) {
-                shortest = Math.abs(curF - listofFloors.get(i));
-                temp = i;
-            }
-        }
-        shortest = listofFloors.get(temp);
+        // for (int i = 1; i < listofFloors.size(); i++) {
+        //     if (shortest > Math.abs(curF - floor)) {
+        //         shortest = Math.abs(curF - floor);
+        //         temp = i;
+        //     }
+        // }
+        //shortest = listofFloors.get(temp);
         println("Shortest " + shortest);
 
         //listofFloors.set(temp, 10);
