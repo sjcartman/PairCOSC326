@@ -8,7 +8,7 @@ public class Strategy {
 
     int curF;
     int desF;
-    ArrayList<Integer> listofFloors;
+    LinkedList<Integer> listofFloors;
     int pass;
     int[] destinationFloors = new int[NO_OF_FLOORS];
 
@@ -23,11 +23,11 @@ public class Strategy {
 
         // generate random current floor
         curF = rand.nextInt(NO_OF_FLOORS) ;
-        println("current floor " + curF);
+        println("current floor " + curF+1);
 
         // generate random persons
         pass = rand.nextInt(CAPACITY);
-        println("no of pp " + pass);
+        println("no of pp " + pass+1);
 
         // generate destination floor depending on how many persons
     //    for (int i=1; i <= pass && i < destinationFloors.length; i++) {
@@ -38,10 +38,10 @@ public class Strategy {
       //  }
 
         println(curF + "F | Number of passengers: " + pass);
-
+       
         //if (pass > 0 && pass <= CAPACITY) {
 
-            listofFloors = new ArrayList<>();
+            listofFloors = new LinkedList<Integer>();
             for (int i = 0; i < pass; i++) {
                 int floor = desFloor(i);
 
@@ -58,8 +58,9 @@ public class Strategy {
     }
 
     public  void move_elevator() {
-
-        for (int i : listofFloors) {
+        int i = 0;
+        while (listofFloors.peekFirst() != null) {
+            i = listofFloors.pollFirst();
             int shortest_path = findShortest(i);
 
             //println("To destination " + shortest_path + "F (" + destinationFloors[shortest_path-1] + ") Passengers");
@@ -147,26 +148,28 @@ public class Strategy {
 
         int destination = floor;
         int shortest = 0;
-        if(curF > destination){
-            shortest = curF - Math.abs(curF-destination);
-        }
-        else if (curF < destination){
-            shortest = curF + Math.abs(curF-destination);
-            
-        }
-
-
-        println("show lstofFloors " + listofFloors.get(0));
+     
         println("Shortest " + shortest);
-
+        int index = -1;
         //int temp = 0;
+        for (int i = 0; i < listofFloors.size(); i++) {
+            int target = 0;
+            if(curF > destination){
+                target  = curF - Math.abs(curF-listofFloors.get(i));
+            }
+            else if (curF < destination){
+                target = curF + Math.abs(curF-listofFloors.get(i));
+            }
 
-        // for (int i = 1; i < listofFloors.size(); i++) {
-        //     if (shortest > Math.abs(curF - floor)) {
-        //         shortest = Math.abs(curF - floor);
-        //         temp = i;
-        //     }
-        // }
+            if (shortest > target) {
+                shortest = target;
+                index = i;
+            }
+
+        }
+        if(index > -1 ){
+            listofFloors.set(index,floor);
+        }
         //shortest = listofFloors.get(temp);
         println("Shortest " + shortest);
 
