@@ -1,0 +1,67 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf610
+{\fonttbl\f0\froman\fcharset0 Times-Bold;\f1\froman\fcharset0 Times-Roman;\f2\fswiss\fcharset0 Helvetica;
+}
+{\colortbl;\red255\green255\blue255;\red27\green31\blue34;\red255\green255\blue255;\red49\green50\blue61;
+\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c14118\c16078\c18039;\cssrgb\c100000\c100000\c100000;\cssrgb\c25098\c25882\c30588;
+\cssrgb\c0\c0\c0;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid1\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid101\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid201\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid3}
+{\list\listtemplateid4\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid301\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid4}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}{\listoverride\listid4\listoverridecount0\ls4}}
+\paperw11900\paperh16840\margl1440\margr1440\vieww25220\viewh13040\viewkind0
+\deftab720
+\pard\pardeftab720\sl360\sa320\partightenfactor0
+
+\f0\b\fs36 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Wiki Scan disk-scheduling  https://www.geeksforgeeks.org/scan-elevator-disk-scheduling-algorithms/\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sl520\partightenfactor0
+\ls1\ilvl0
+\f1\b0 \cf4 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	1.	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec4 SCAN algorithm have no starvation.\cb1 \
+\pard\pardeftab720\sl400\partightenfactor0
+\cf4 \cb3 2. This algorithm is better than FCFS Scheduling algorithm
+\f0\b \cf2 \strokec2 \
+\pard\pardeftab720\sl360\sa320\partightenfactor0
+\cf2 \
+Collective Control Elevator Algorithm\
+\pard\pardeftab720\sl280\partightenfactor0
+
+\f1\b0 \cf5 \cb1 \strokec5 The elevator runs in one direction and picks up passengers with the same direction as the elevator. When all of the passengers have been dropped off and there are no more requests in that direction, the elevator will go in the other direction if there are any requests. Else it will just stop and be idle where it dropped the last passenger[5]. One drawback of this strategy is the phenomenon called bunching, where several cars answer the same call from a floor and arrive at similar times, thus increasing both the waiting time for the other passengers in the system and the elevators\'92 travel distance.\
+\
+https://www.diva-portal.org/smash/get/diva2:668654/FULLTEXT01.pdf\
+\cf2 \cb3 \strokec2 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sl360\partightenfactor0
+\ls2\ilvl0
+\f0\b \cf2 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	1.	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 First Come First Served (FCFS)  https://www.geeksforgeeks.org/fcfs-disk-scheduling-algorithms/\
+\pard\pardeftab720\sl400\partightenfactor0
+\ls2\ilvl0
+\f2\b0\fs34 \cf4 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	2.	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec4 As the name suggests, this algorithm entertains requests in the order they arrive in the disk queue\
+\ls2\ilvl0
+\f1\fs36 \cf2 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	3.	}
+\f2\fs34 \cf4 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec4 The algorithm looks very fair and there is no starvation (all requests are serviced sequentially) but generally, it does not provide the fastest service.
+\f1\fs36 \cf2 \strokec2 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sl360\partightenfactor0
+\ls3\ilvl0\cf2 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 The elevator would respond to the first request button, go to that floor, drop the person to the requested floor and then move on to the next person.\cb1 \
+\ls3\ilvl0\cb3 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 At first glance, it\'92s clear that this will generate excessive up and down movement of the elevator. It also will not be the most time efficient.\cb1 \
+\ls3\ilvl0\cb3 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 fair in terms of serving, if fairness means relative wait time. Choosing the next request would be very fast, based on a simple queue data structure.\
+\pard\tx566\pardeftab720\sl360\partightenfactor0
+\cf2 \cb1 \
+Elevator controller https://www.csc.kth.se/utbildning/kth/kurser/DD143X/dkand13/Group3Johan/report/alexandra.nordin.frederick.ceder.report.pdf\
+\
+\pard\pardeftab720\sl360\sa320\partightenfactor0
+
+\f0\b \cf2 \cb3 Shortest path - Shortest Seek Time First 
+\f1\b0 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sl360\partightenfactor0
+\ls4\ilvl0\cf2 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Whenever the elevator drops a person to the desired floor, it can look at all the requests, and pick the request that\'92s originating at the nearest floor. It will minimize the distance that elevator has to travel to start serving another request.\cb1 \
+\ls4\ilvl0\cb3 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 There is a possibility that requests keep coming from a region of nearby floors, and the elevator doesn\'92t get a chance to serve older requests from floors that are far away. This can lead to starvation for some requests, as there is no upper bound on the wait time.}
