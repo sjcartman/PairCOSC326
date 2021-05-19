@@ -1,0 +1,21 @@
+Wiki Scan disk-scheduling  https://www.geeksforgeeks.org/scan-elevator-disk-scheduling-algorithms/
+	1.	SCAN algorithm have no starvation.
+	2. This algorithm is better than FCFS Scheduling algorithm
+
+Collective Control Elevator Algorithm
+The elevator runs in one direction and picks up passengers with the same direction as the elevator. When all of the passengers have been dropped off and there are no more requests in that direction, the elevator will go in the other direction if there are any requests. Else it will just stop and be idle where it dropped the last passenger[5]. One drawback of this strategy is the phenomenon called bunching, where several cars answer the same call from a floor and arrive at similar times, thus increasing both the waiting time for the other passengers in the system and the elevators’ travel distance.
+
+https://www.diva-portal.org/smash/get/diva2:668654/FULLTEXT01.pdf
+
+	1.	First Come First Served (FCFS)  https://www.geeksforgeeks.org/fcfs-disk-scheduling-algorithms/
+	2.	As the name suggests, this algorithm entertains requests in the order they arrive in the disk queue
+	3.	The algorithm looks very fair and there is no starvation (all requests are serviced sequentially) but generally, it does not provide the fastest service.
+	•	The elevator would respond to the first request button, go to that floor, drop the person to the requested floor and then move on to the next person.
+	•	At first glance, it’s clear that this will generate excessive up and down movement of the elevator. It also will not be the most time efficient.
+	•	fair in terms of serving, if fairness means relative wait time. Choosing the next request would be very fast, based on a simple queue data structure.
+
+Elevator controller https://www.csc.kth.se/utbildning/kth/kurser/DD143X/dkand13/Group3Johan/report/alexandra.nordin.frederick.ceder.report.pdf
+
+Shortest path - Shortest Seek Time First 
+	•	Whenever the elevator drops a person to the desired floor, it can look at all the requests, and pick the request that’s originating at the nearest floor. It will minimize the distance that elevator has to travel to start serving another request.
+	•	There is a possibility that requests keep coming from a region of nearby floors, and the elevator doesn’t get a chance to serve older requests from floors that are far away. This can lead to starvation for some requests, as there is no upper bound on the wait time.
