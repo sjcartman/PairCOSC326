@@ -2,32 +2,32 @@ import java.util.*;
 
 public class Passengers(){
 
-    int start_time;
-    int end_time;
-    int floor_start;
-    int floor_end;
+		int start_time;
+		int end_time;
+		int floor_start;
+		int floor_end;
 
-    public Passengers(int time,int start,int end){
-	this.start_time = time;
-	this.floor_start = start;
-	this.floor_end = end;
-    }
+public Passengers(int arrive, int curF, int desF){
+		this.start_time = arrive;
+		this.floor_start = curF;
+		this.floor_end = desF;
+		}
 
-    public int getStart_time(){
-	return start_time;
+public int getStartTime(){
+		return start_time;
 
-    }
+		}
 
-    public int getEnd_time(){
-	return end_time;
+public int getEndTime(){
+		return end_time;
 
-    }
+		}
 
-    public int getFloor_start(){
-	return floor_start;
-    }
+public int getFloor_start(){
+		return floor_start;
+		}
 
-    public int getFloor_end(){
-	return floor_end;
-    }
-}
+public int getFloor_end(){
+		return floor_end;
+		}
+		}
