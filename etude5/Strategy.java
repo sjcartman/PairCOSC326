@@ -1,6 +1,19 @@
+//https://www.geeksforgeeks.org/schedule-elevator-to-reduce-the-total-time-taken/
+// https://www.geeksforgeeks.org/scan-elevator-disk-scheduling-algorithms/
+// https://www.w3schools.com/java/java_abstract.asp
+
 import java.util.*;
 
-public class Strategy {
+public abstract class Strategy {
+
+    // create an elevator object??
+
+    abstract void move_elevator();
+
+}
+
+class GFG extends Strategy {
+
     final int CAPACITY = 4;
     final int NO_OF_FLOORS = 10;
     final int TIME_BETWEEN_FLOORS = 5;
@@ -8,118 +21,65 @@ public class Strategy {
 
     int curF;
     int desF;
-    LinkedList<Integer> listofFloors;
-    int pass;
-    int[] destinationFloors = new int[NO_OF_FLOORS];
+    ArrayList<Passengers> passengers = new ArrayList();
+
 
     public static void main(String[] args) {
 
+
         Strategy elevator = new Strategy();
-        elevator.getInput();
+
+        for (int i = 0; i <; i++) {
+            Random rand = new Random();
+            arrive = rand.nextInt(TIME_BETWEEN_FLOORS);
+            curF = rand.nextInt(NO_OF_FLOORS);
+            desF = rand.nextInt(NO_OF_FLOORS);
+
+            Passengers p = new Passengers(arrive, curF, desF);
+            this.passengers.add(p);
+        }
+
+        println("----- Starting simulation -----");
+
+        elevator.move_elevator();
+
+        println("------ Ending simulation ------");
+
     }
 
-    public void getInput() {
-        Random rand = new Random();
 
-        // generate random current floor
-        curF = rand.nextInt(NO_OF_FLOORS) ;
-        println("current floor " + curF+1);
+    // move up or down depending on its current direction.
 
-        // generate random persons
-        pass = rand.nextInt(CAPACITY);
-        println("no of pp " + pass+1);
-
-        // generate destination floor depending on how many persons
-    //    for (int i=1; i <= pass && i < destinationFloors.length; i++) {
-
-     //        desF = rand.nextInt(NO_OF_FLOORS) + 1;
-     //        destinationFloors[i] = desF;
-     //        println("to where " + desF);
-      //  }
-
-        println(curF + "F | Number of passengers: " + pass);
-       
-        //if (pass > 0 && pass <= CAPACITY) {
-
-            listofFloors = new LinkedList<Integer>();
-            for (int i = 0; i < pass; i++) {
-                int floor = desFloor(i);
-
-                println("des floor " + floor);
-                if (!listofFloors.contains(floor)) {
-                    println("here to add floor");
-                    listofFloors.add(floor);
-                }
-            }
-
-        //}
-
-        move_elevator();
-    }
+    //Given an integer k and an array arr[] representing the destination floors for N people waiting currently at the
+    //ground floor and k is the capacity of the elevator i.e. maximum number of people it can hold at the same time. It
+    //takes 1 unit time for the elevator to reach any consecutive floor from the current floor. The task is to schedule
+    //the elevator in a way to minimize the total time taken to get all the people to their destination floor and then
+    //return back to the ground floor.
 
     public  void move_elevator() {
-        int i = 0;
-        while (listofFloors.peekFirst() != null) {
-            i = listofFloors.pollFirst();
-            int shortest_path = findShortest(i);
 
-            //println("To destination " + shortest_path + "F (" + destinationFloors[shortest_path-1] + ") Passengers");
-            println("To destination " + shortest_path + "F.");
+        // Sort in descending order
 
-            while(curF < shortest_path) {
-                goUp();
-            }
+        int temp;
+        int n = passengers.size();
 
-            while (curF > shortest_path) {
-                goDown();
-            }
 
-            if(curF == shortest_path){
-                println("arrived at floor: " + curF );
-            }
-            // while (destinationFloors[shortest_path-1] > 0) {
-            //     println(destinationFloors[shortest_path-1]);
-            //     println("Getting off ... " + destinationFloors[shortest_path-1]-- + " passenger(s) at " + curF + "F.");
-            //     delay(2);  //getting on and off
-            //     println("xx");
 
-            // }
 
-        }
+
+
     }
-
-
-    public  int desFloor(int f) {
-        Random prand = new Random();
-        boolean validFloor = false;
-
-        int floor = 0;
-
-        while (!validFloor) {
-            floor = prand.nextInt(NO_OF_FLOORS);
-            println("curF " + curF );
-            println("floor " + floor);
-            if (floor == curF) {
-                println("You are in " + curF + "F.");
-            } else {
-               destinationFloors[floor]++;
-               validFloor = true;
-           }
-       }
-        return floor;
-    }
-
 
 
 
     public  void goUp() {
         println(curF++ + "F | Going up ...");
-        delay(2);
+        delay(5);
     }
 
     public  void goDown() {
         println(curF-- + "F | Going down ...");
-        delay(3);
+        delay(5);
     }
 
     public  void println(Object o) {
@@ -137,43 +97,8 @@ public class Strategy {
         return diff * TIME_BETWEEN_FLOORS;
     }
 
-    public  double getWaitTime(int destination) {
-        return 1.0;
-        // not sure yet
+    public double getWaitTime(int destination) {
+        return int waitTime += Math.abs(passengers.getEndTime - passengers.getStartTime); //??
     }
 
-    public  int findShortest(int floor) {
-
-        println("size " + listofFloors.size());
-
-        int destination = floor;
-        int shortest = 0;
-     
-        println("Shortest " + shortest);
-        int index = -1;
-        //int temp = 0;
-        for (int i = 0; i < listofFloors.size(); i++) {
-            int target = 0;
-            if(curF > destination){
-                target  = curF - Math.abs(curF-listofFloors.get(i));
-            }
-            else if (curF < destination){
-                target = curF + Math.abs(curF-listofFloors.get(i));
-            }
-
-            if (shortest > target) {
-                shortest = target;
-                index = i;
-            }
-
-        }
-        if(index > -1 ){
-            listofFloors.set(index,floor);
-        }
-        //shortest = listofFloors.get(temp);
-        println("Shortest " + shortest);
-
-        //listofFloors.set(temp, 10);
-        return shortest;
-    }
 }
